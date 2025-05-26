@@ -1,13 +1,14 @@
-import { sql } from "drizzle-orm";
 import {
-  pgTable,
-  integer,
-  text,
-  jsonb,
-  serial,
-  timestamp,
   bigint,
+  integer,
+  jsonb,
+  pgTable,
+  serial,
+  text,
+  timestamp,
 } from "drizzle-orm/pg-core";
+
+import { sql } from "drizzle-orm";
 
 const advocates = pgTable("advocates", {
   id: serial("id").primaryKey(),
