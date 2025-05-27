@@ -25,7 +25,7 @@ export default function AdvocatesTable() {
 
       try {
         const res = await fetch(`/api/advocates?${params.toString()}`);
-        const {data} = await res.json();
+        const { data } = await res.json();
         setAdvocates(data);
       } catch (error) {
         console.error("Error fetching advocates:", error);
