@@ -6,7 +6,7 @@ import { advocates } from "../../../db/schema";
 
 export async function POST() {
   try {
-    await db.insert(advocates).values(advocateData)
+    await db.insert(advocates).values(advocateData);
     return NextResponse.json({ message: "Seeding successful" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Seeding failed" }, { status: 500 });

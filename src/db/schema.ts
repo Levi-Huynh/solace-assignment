@@ -1,12 +1,4 @@
-import {
-  bigint,
-  integer,
-  jsonb,
-  pgTable,
-  serial,
-  text,
-  timestamp,
-} from "drizzle-orm/pg-core";
+import { bigint, integer, jsonb, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 import { sql } from "drizzle-orm";
 
@@ -21,5 +13,7 @@ const advocates = pgTable("advocates", {
   phoneNumber: bigint("phone_number", { mode: "number" }).notNull(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
+
+export type Advocate = typeof advocates.$inferSelect & { specialties: string[] };
 
 export { advocates };

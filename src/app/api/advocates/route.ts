@@ -6,19 +6,27 @@ import db from "@/db";
 
 /**
  * GET /api/advocates
- * Fetches a list of advocates with optional pagination (limit, offset) and search filters.
- * Supports searching by city, degree, full name (first + last), phone number,
- * years of experience, and specialties.
+ * Fetches a list of advocates with optional paginate params and search filters.
  *
  * @param {Request} request - The incoming request object.
+ * Paginate param and search filters are stored on the request URL.
+ *
+ * Paginate parameters:
+ * limit - The maximum number of advocates to return (default is 10).
+ * offset - The number of advocates to skip (default is 0).
+ *
+ * Search filter:
+ * q - A search query string to filter advocates by city, degree, full or partial name,
+ * phone number, years of experience, or specialties
+ *
  * @returns {Response} - A JSON response containing the list of advocates.
  */
 
 export async function GET(request: Request) {
-  // Parse for client provided pagination or search params
+  // Parse for request params
   const { searchParams } = new URL(request.url);
   const limit = parseInt(searchParams.get("limit") || limitDefault);
-  const offset = parseInt(searchParams.get("offset") || OffsetDefault);  
+  const offset = parseInt(searchParams.get("offset") || OffsetDefault);
   const searchVal = searchParams.get("q")?.toLowerCase().trim() || "";
   const like = `%${searchVal}%`;
 
