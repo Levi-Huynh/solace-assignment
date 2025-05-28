@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
+        sans: ["sans-serif"],
       },
       colors: {
         greenPrimary: "#1D4D4F",
@@ -18,6 +18,10 @@ const config: Config = {
         goldAccent: "#D1A73F",
         lightGold: "#F3E4CA",
         lightGreen: "#D4E2DD",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },

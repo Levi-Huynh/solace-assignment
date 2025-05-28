@@ -1,0 +1,21 @@
+# Node modules and build artifacts
+node_modules
+.next
+out
+dist
+build
+coverage
+
+# Environment and config files
+.env*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Public/static assets
+public/*
+!public/**/*.js
+!public/**/*.ts
+
+# Misc
+*.log
