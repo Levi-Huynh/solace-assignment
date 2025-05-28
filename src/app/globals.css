@@ -1,3 +1,140 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: Inter, sans-serif;
+}
+h1,
+h2,
+h3,
+.font-serif {
+  font-family: "Playfair Display", serif;
+}
+
+@layer base {
+  td {
+    @apply py-3 px-4 text-sm whitespace-nowrap;
+  }
+
+  th {
+    @apply py-3 px-4 font-semibold text-white;
+  }
+}
+
+@layer components {
+  .header-primary {
+    @apply w-full bg-gradient-to-r from-greenSecondary to-greenPrimary text-white text-left py-6 px-4;
+  }
+
+  /* Button base */
+  .btn {
+    @apply inline-flex items-center justify-center text-sm
+    font-semibold rounded-lg px-4 py-2 disabled:opacity-50 transition;
+  }
+  /* variants */
+  .btn-primary {
+    @apply btn border border-goldAccent bg-gradient-to-r from-lightGold to-goldAccent
+     text-greenPrimary hover:opacity-90 transition disabled:opacity-50;
+  }
+  .btn-outline {
+    @apply btn border border-goldAccent text-greenPrimary;
+  }
+  .btn-text {
+    @apply btn text-goldAccent;
+  }
+  .btn-link {
+    @apply btn text-blue-500 text-xs underline ml-1;
+  }
+
+  /* Table base */
+  .table {
+    @apply min-w-full table-auto text-left;
+  }
+  /* variants */
+  .table-primary {
+    @apply table border border-b border-gray-200 rounded-lg overflow-hidden;
+  }
+
+  /* Table row base*/
+  .tr {
+    @apply border-b hover:bg-gray-50 transition;
+  }
+
+  /* Table cell variants */
+  .td-chips {
+    @apply p-4 align-top text-gray-700 max-w-xs items-center justify-center;
+  }
+
+  /* Input base */
+  .input {
+    @apply w-full md:w-1/2 text-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lightGold transition;
+  }
+}
+
+@layer utilities {
+  /* Hide on mobile */
+  .hide-mobile {
+    display: none;
+  }
+  /* at ≥ sm (640px) and up, restore its default display */
+  @screen sm {
+    .hide-mobile {
+      display: revert;
+    }
+  }
+
+  /* Compact table on mobile */
+  .table-responsive {
+    /* smaller text and tighter widths and cells */
+    @apply text-xs w-3/5;
+  }
+  .table-responsive td,
+  .table-responsive th {
+    @apply py-1 px-1;
+  }
+
+  /* at ≥640px, go back to normal */
+  @screen sm {
+    .table-responsive {
+      @apply text-sm;
+    }
+    .table-responsive td {
+      @apply py-3 px-4;
+    }
+    .table-responsive th {
+      @apply py-3 px-4;
+    }
+  }
+
+  /* max 7xl layout with set margins and padding */
+  .max7xl-layout {
+    @apply max-w-7xl mx-auto mt-16 px-4;
+  }
+
+  /* Overflow and set margins for scrollable parent */
+  .scrollable-parent {
+    @apply overflow-x-auto mb-10;
+  }
+
+  .single-row {
+    @apply flex flex-row mb-4 gap-4;
+  }
+
+  .highlight-selected {
+    @apply border-b hover:bg-gray-50 transition;
+  }
+
+  .icon-label {
+    @apply inline-flex items-center justify-center text-sm
+    font-semibold;
+  }
+
+  .wrap-columns {
+    @apply flex flex-col flex-wrap gap-1 items-center justify-center;
+  }
+
+  .cell-chip {
+    @apply flex flex-col items-center justify-center bg-lightGreen px-2 rounded-full text-xs h-6 whitespace-nowrap;
+  }
+}
