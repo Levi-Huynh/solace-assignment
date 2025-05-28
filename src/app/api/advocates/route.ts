@@ -1,5 +1,5 @@
-import { OffsetDefault, limitDefault } from "../utils";
 import { ilike, or, sql } from "drizzle-orm";
+import { limitDefault, offsetDefault } from "../utils";
 
 import { advocates } from "@/db/schema";
 import db from "@/db";
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   // Parse for request params
   const { searchParams } = new URL(request.url);
   const limit = parseInt(searchParams.get("limit") || limitDefault);
-  const offset = parseInt(searchParams.get("offset") || OffsetDefault);
+  const offset = parseInt(searchParams.get("offset") || offsetDefault);
   const searchVal = searchParams.get("q")?.toLowerCase().trim() || "";
   const like = `%${searchVal}%`;
 

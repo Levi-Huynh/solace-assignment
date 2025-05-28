@@ -9,7 +9,7 @@ export type Column<T> = {
   key: keyof T;
   header: string;
   className?: HTMLAttributes<T>["className"];
-  render?: (row: T) => React.ReactNode;
+  render?: (row: T, key: string) => React.ReactNode;
 };
 
 type Row<T> = {
@@ -35,10 +35,12 @@ export function Table<T>({ columns, rows }: TableProps<T>) {
           {rows.map((row) => (
             <tr key={row.id} className="highlight-selected">
               {(columns ?? []).map((col) => {
-                const content = col.render ? col.render(row.data) : null;
+                const content = col.render
+                  ? col.render(row.data, row.data[col.key] as string)
+                  : null;
 
                 return (
-                  // Default to rendering a basic <td> with the row data if a custom render not provided
+                  // Default to rendering a basic <td> with the row data if custom content not provided
                   content ?? (
                     <td key={row.data[col.key] as string} className={col.className}>
                       {row.data[col.key] as React.ReactNode}

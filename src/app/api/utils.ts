@@ -2,4 +2,4 @@
 
 // Pagination constants
 export const limitDefault = "10";
-export const OffsetDefault = "0";
+export const offsetDefault = "0";

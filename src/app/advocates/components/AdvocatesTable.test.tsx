@@ -64,7 +64,7 @@ describe("AdvocatesTable", () => {
     const input = screen.getByPlaceholderText("Search Advocates...");
     fireEvent.change(input, { target: { value: "John" } });
     fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
-    
+
     // Verify correct search query
     await waitFor(() => {
       expect(global.fetch).toHaveBeenLastCalledWith(expect.stringContaining("q=John"));

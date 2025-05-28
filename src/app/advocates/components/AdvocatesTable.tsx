@@ -82,7 +82,7 @@ const columns: Column<Advocate>[] = [
   {
     header: "Name",
     key: "firstName",
-    render: (row) => <td>{`${row.firstName} ${row.lastName}`}</td>,
+    render: (row, key) => <td key={key}>{`${row.firstName} ${row.lastName}`}</td>,
   },
   { header: "City", key: "city", className: "hide-mobile" },
   { header: "Degree", key: "degree", className: "hide-mobile" },
@@ -90,8 +90,12 @@ const columns: Column<Advocate>[] = [
     header: "Specialties",
     key: "specialties",
     className: "text-center",
-    render: (row) => <CellChips items={row.specialties} />,
+    render: (row, key) => <CellChips key={key} items={row.specialties} />,
   },
   { header: "Years of Experience", key: "yearsOfExperience", className: "hide-mobile" },
-  { header: "Phone", key: "phoneNumber", render: (row) => <td>{formatPhone(row.phoneNumber)}</td> },
+  {
+    header: "Phone",
+    key: "phoneNumber",
+    render: (row, key) => <td key={key}>{formatPhone(row.phoneNumber)}</td>,
+  },
 ];

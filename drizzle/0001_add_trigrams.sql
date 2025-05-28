@@ -11,18 +11,21 @@ CREATE INDEX advocates_city_trgm_idx
 CREATE INDEX advocates_degree_trgm_idx
   ON advocates USING GIN (degree gin_trgm_ops);
 
+-- 3) Trigram index on concatenated first and last name
+-- Enables fast partial search across both first and last names
+-- (e.g. "%john doe%", "%doe J%" )
 CREATE INDEX advocates_name_trgm_idx
   ON advocates USING GIN ((first_name || ' ' || last_name) gin_trgm_ops);
   
--- 3) For numeric casts
--- index the text representation of numeric columns (phone_number, years_of_experience)
--- so that ILIKE filters on their string form can also use the trigram index
+-- 4) For numeric casts
+-- this indexes the text representation of numeric columns (phone_number, years_of_experience)
+-- so that their string forms can also use the index
 CREATE INDEX advocates_phone_trgm_idx
   ON advocates USING GIN ((phone_number::text) gin_trgm_ops);
 
 CREATE INDEX advocates_experience_trgm_idx
   ON advocates USING GIN ((years_of_experience::text) gin_trgm_ops);
 
--- 4) Cast the JSONB column to text, and index the text allows fast searches within the JSON content
+-- 5) For JSONB casts to text, text index allows fast searches within the JSON content
 CREATE INDEX advocates_specialties_trgm_idx
   ON advocates USING GIN ((payload::text) gin_trgm_ops);

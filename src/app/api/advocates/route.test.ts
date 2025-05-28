@@ -1,4 +1,4 @@
-import { OffsetDefault, limitDefault } from "../utils";
+import { limitDefault, offsetDefault } from "../utils";
 
 import { GET } from "./route";
 import { advocates } from "@/db/schema";
@@ -48,7 +48,7 @@ describe("GET/api/advocates", () => {
     expect(db.select).toHaveBeenCalled();
     expect(qb.from).toHaveBeenCalledWith(advocates);
     expect(qb.limit).toHaveBeenCalledWith(parseInt(limitDefault));
-    expect(qb.offset).toHaveBeenCalledWith(parseInt(OffsetDefault));
+    expect(qb.offset).toHaveBeenCalledWith(parseInt(offsetDefault));
     expect(qb.where).toHaveBeenCalled();
     expect(body).toEqual({
       data: [{ id: 1, firstName: "Jane", lastName: "Doe" }],
