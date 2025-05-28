@@ -8,6 +8,12 @@ import { formatPhone } from "@/app/utils";
 
 beforeEach(() => {
   jest.resetAllMocks();
+  jest.useFakeTimers();
+});
+
+afterEach(() => {
+  jest.clearAllTimers();
+  jest.useRealTimers();
 });
 
 describe("AdvocatesTable", () => {
@@ -27,13 +33,10 @@ describe("AdvocatesTable", () => {
       ],
     };
 
-    act(
-      () =>
-        ((global.fetch as jest.Mock) = jest.fn().mockResolvedValueOnce({
-          ok: true,
-          json: async () => mockData,
-        }))
-    );
+    (global.fetch as jest.Mock) = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData,
+    });
 
     render(<AdvocatesTable />);
 
@@ -50,7 +53,6 @@ describe("AdvocatesTable", () => {
   });
 
   it("correctly requests a search query", async () => {
-    // Mock initial and search fetch calls
     (global.fetch as jest.Mock) = jest.fn().mockResolvedValue({
       ok: true,
       json: async () => ({ data: [] }),
@@ -58,14 +60,14 @@ describe("AdvocatesTable", () => {
 
     render(<AdvocatesTable />);
 
-    // Wait for initial load
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
-    // Mock the input change and submit
     const input = screen.getByPlaceholderText("Search Advocates...");
     fireEvent.change(input, { target: { value: "John" } });
-    fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
+    // Advance timers to flush the 300ms debounce
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
 
-    // Verify correct search query
+    // Now the debounced fetch should fire with q=John
     await waitFor(() => {
       expect(global.fetch).toHaveBeenLastCalledWith(expect.stringContaining("q=John"));
     });

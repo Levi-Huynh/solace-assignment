@@ -6,6 +6,6 @@ export function formatPhone(phoneNumber: number): string {
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`;
   }
-  // If the format is wrong return the digit values
+  // If the format is wrong return cleaned values
   return cleaned;
 }

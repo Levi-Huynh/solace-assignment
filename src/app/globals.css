@@ -23,12 +23,16 @@ h3,
 }
 
 @layer components {
+  .header-primary {
+    @apply w-full bg-gradient-to-r from-greenSecondary to-greenPrimary text-white text-left py-6 px-4;
+  }
+
   /* Button base */
   .btn {
     @apply inline-flex items-center justify-center text-sm
     font-semibold rounded-lg px-4 py-2 disabled:opacity-50 transition;
   }
-  /* Button variants */
+  /* variants */
   .btn-primary {
     @apply btn border border-goldAccent bg-gradient-to-r from-lightGold to-goldAccent
      text-greenPrimary hover:opacity-90 transition disabled:opacity-50;
@@ -47,8 +51,7 @@ h3,
   .table {
     @apply min-w-full table-auto text-left;
   }
-
-  /* Table variants */
+  /* variants */
   .table-primary {
     @apply table border border-b border-gray-200 rounded-lg overflow-hidden;
   }

@@ -7,7 +7,7 @@ type CellChipsProp = {
   limit?: number;
 };
 
-export function CellChips({ items, limit = 3 }: CellChipsProp) {
+export function CellChips({ items, limit = 1 }: CellChipsProp) {
   const [showAll, setShowAll] = useState(false);
   const displayItems = showAll ? items : items.slice(0, limit);
 

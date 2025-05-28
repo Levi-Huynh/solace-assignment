@@ -1,11 +1,11 @@
 "use client";
 
-import { AdvocatesTable, Header } from "./components";
+import { AdvocatesTable } from "./components";
 
 export default function Home() {
   return (
     <main>
-      <Header title="Solace Advocates" />
+      <header className="header-primary bg-gradient-radial">Solace Advocates</header>
       <AdvocatesTable />
     </main>
   );
