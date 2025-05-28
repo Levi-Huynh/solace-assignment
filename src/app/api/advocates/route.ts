@@ -1,11 +1,11 @@
-import { ilike, or, sql } from "drizzle-orm";
 import { limitDefault, offsetDefault } from "../utils";
 
 import { advocates } from "@/db/schema";
 import db from "@/db";
+import { sql } from "drizzle-orm";
 
 /**
- * GET /api/advocates
+ * GET api/advocates?limit=10&offset=0&q=
  * Fetches a list of advocates with optional paginate params and search filters.
  *
  * @param {Request} request - The incoming request object.
@@ -16,38 +16,54 @@ import db from "@/db";
  * offset - The number of advocates to skip (default is 0).
  *
  * Search filter:
- * q - A search query string to filter advocates by city, degree, full or partial name,
- * phone number, years of experience, or specialties
+ * q - A search query string used in the full-text search by advocate name, city, degree or specialties
  *
  * @returns {Response} - A JSON response containing the list of advocates.
  */
 
 export async function GET(request: Request) {
-  // Parse for request params
   const { searchParams } = new URL(request.url);
   const limit = parseInt(searchParams.get("limit") || limitDefault);
   const offset = parseInt(searchParams.get("offset") || offsetDefault);
-  const searchVal = searchParams.get("q")?.toLowerCase().trim() || "";
-  const like = `%${searchVal}%`;
+  const q = searchParams.get("q")?.toLowerCase().trim() || "";
 
-  const filters = [
-    ilike(advocates.city, like),
-    ilike(advocates.degree, like),
-    // Use sql to combine first and last names for partial match since
-    // ilike does not support concatenation natively
-    sql`${advocates.firstName} || ' ' || ${advocates.lastName} ILIKE ${like}`,
-    // Cast int, jsonb and non-string fields to text, for partial match
-    sql`${advocates.phoneNumber}::text ILIKE ${like}`,
-    sql`${advocates.yearsOfExperience}::text ILIKE ${like}`,
-    sql`${advocates.specialties}::text ILIKE ${like}`,
-  ];
+  const tsSearch = q
+    ? sql`
+        (
+         setweight(
+           to_tsvector('english', ${advocates.firstName}),
+           'A'
+         )
+         ||
+         setweight(
+           to_tsvector('english', ${advocates.lastName}),
+           'B'
+         )
+         ||
+         setweight(
+           to_tsvector('english', ${advocates.city}),
+           'C'
+         )
+         ||
+         setweight(
+           to_tsvector('english', ${advocates.degree}),
+           'D'
+         )
+         ||
+         setweight(
+           to_tsvector('english', ${advocates.specialties}::text),
+           'D'
+         )
+       )
+     @@ plainto_tsquery('english', ${q})
+   `
+    : sql`TRUE`;
 
-  const data = await db
-    .select()
-    .from(advocates)
-    .where(or(...filters))
-    .limit(limit)
-    .offset(offset);
+  try {
+    const data = await db.select().from(advocates).where(tsSearch).limit(limit).offset(offset);
 
-  return Response.json({ data });
+    return Response.json({ success: true, message: "Advocates fetched", data, status: 200 });
+  } catch (err: any) {
+    return Response.json({ success: false, message: err.message, status: 500 });
+  }
 }

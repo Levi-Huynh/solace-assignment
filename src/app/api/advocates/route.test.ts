@@ -52,6 +52,9 @@ describe("GET/api/advocates", () => {
     expect(qb.where).toHaveBeenCalled();
     expect(body).toEqual({
       data: [{ id: 1, firstName: "Jane", lastName: "Doe" }],
+      message: "Advocates fetched",
+      status: 200,
+      success: true,
     });
   });
 
@@ -65,6 +68,9 @@ describe("GET/api/advocates", () => {
     expect(qb.where).toHaveBeenCalled();
     expect(body).toEqual({
       data: [{ id: 1, firstName: "Jane", lastName: "Doe" }],
+      message: "Advocates fetched",
+      status: 200,
+      success: true,
     });
   });
 });
