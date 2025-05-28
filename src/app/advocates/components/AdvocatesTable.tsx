@@ -73,12 +73,12 @@ export default function AdvocatesTable() {
         columns={columns}
         rows={(advocates || []).map((a) => ({ id: a.id, data: a }))}
       />
-      {!loading && advocates.length === 0 && <div>No rows Found</div>}
+      {!loading && (advocates || []).length === 0 && <div>No rows Found</div>}
 
       <Pagination
         offset={offset}
         limit={limit}
-        total={advocates.length}
+        total={(advocates || []).length}
         onPageChange={onPageChange}
       />
     </section>
