@@ -92,7 +92,7 @@ const columns: Column<Advocate>[] = [
     className: "text-center",
     render: (row, key) => <CellChips key={key} items={row.specialties} />,
   },
-  { header: "Years of Experience", key: "yearsOfExperience", className: "hide-mobile" },
+  { header: "Years of Experience", key: "yearsOfExperience", className: "hide-mobile text-center" },
   {
     header: "Phone",
     key: "phoneNumber",

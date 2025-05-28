@@ -70,6 +70,40 @@ h3,
 }
 
 @layer utilities {
+  /* Hide on mobile */
+  .hide-mobile {
+    display: none;
+  }
+  /* at ≥ sm (640px) and up, restore its default display */
+  @screen sm {
+    .hide-mobile {
+      display: revert;
+    }
+  }
+
+  /* Compact table on mobile */
+  .table-responsive {
+    /* smaller text and tighter widths and cells */
+    @apply text-xs w-3/5;
+  }
+  .table-responsive td,
+  .table-responsive th {
+    @apply py-1 px-1;
+  }
+
+  /* at ≥640px, go back to normal */
+  @screen sm {
+    .table-responsive {
+      @apply text-sm;
+    }
+    .table-responsive td {
+      @apply py-3 px-4;
+    }
+    .table-responsive th {
+      @apply py-3 px-4;
+    }
+  }
+
   /* max 7xl layout with set margins and padding */
   .max7xl-layout {
     @apply max-w-7xl mx-auto mt-16 px-4;

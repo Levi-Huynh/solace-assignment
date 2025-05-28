@@ -20,7 +20,7 @@ type Row<T> = {
 export function Table<T>({ columns, rows }: TableProps<T>) {
   return (
     <div className="scrollable-parent">
-      <table className="table-primary">
+      <table className="table-primary table-responsive">
         <thead className="bg-greenPrimary text-white">
           <tr>
             {(columns ?? []).map((column) => (

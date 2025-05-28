@@ -21,18 +21,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    plugin(({ addUtilities }) => {
-      addUtilities({
-        // hidden on screens < 640px
-        ".hide-mobile": {
-          "@media (max-width: 639px)": {
-            display: "none !important",
-          },
-        },
-      });
-    }),
-  ],
 };
 
 export default config;
